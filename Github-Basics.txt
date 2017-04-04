@@ -1,0 +1,18 @@
+GIT BASICS
+echo "# ykristine13.github.io" >> README.md
+  - creates a new file in the current directory
+
+git init
+  - initialises repository
+
+git add README.md
+  - add README.md to current git repository
+
+git commit -m "first commit"
+  - commit changes
+
+git remote add origin https://github.com/ykristine13/ykristine13.github.io.git
+  - creates a new git repository
+
+git push -u origin master
+  - pushes changes to remot git repository on master branch
