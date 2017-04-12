@@ -1,0 +1,50 @@
+.container{
+    margin-top: 1%;
+    text-align: center;
+    border: 5px ridges gray;
+    border-radius: 15px;
+    width: 700px;
+    height: 825px;
+    font-size: 50px;
+    background-image: url(http://robdose.com.au/wp-content/uploads/2013/07/perth-night.jpg);
+    background-size: cover;
+    color: #e6e6e6;
+    
+}
+
+h3{
+    color: seashell;
+    margin-top: 1%;
+    font-family: monospace;
+}
+
+#calc-title{
+    padding: 1%;
+    height: 6%;
+}
+
+#numdisplay{
+    margin: 1%;
+}
+
+#display-area{
+    border: 3px solid darkslategray;
+    border-radius: 15px;
+    background-color: rgba(50, 50, 50, 0.7);
+    text-align: right;
+    height: 20%;
+    margin: 1%;
+}
+.numbtn, .operator{
+    border: 3px inset #8e54a5;
+    background-color: rgba(50, 50, 50, 0.7);
+    height: 100%;
+    width: 21.5%;
+    font-size: 50px;
+    color: #e6e6e6;
+}
+
+.btn-rows{
+    height: 13.5%;
+    margin-bottom: 1%;
+}
