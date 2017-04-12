@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        
+        <title>Calculator</title>
+        
+         <!-- Bootstrap Core CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.11.0/bootstrap-social.css" type="text/css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="css/calculator.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row" id="calc-title">
+                <h3>Calculator</h3>
+            </div>
+            <div class="row" id="display-area">
+                <span id="numdisplay">513</span>
+            </div>
+            <div class="row btn-rows">
+               <a id="clear"><div class="btn btn-default btn-lg operator">
+                 C 
+                </div></a>
+               
+               <a id="divide"><div class="btn btn-default btn-lg operator">
+                   ÷
+                </div></a>
+               
+               <a id="multiply"><div class="btn btn-default btn-lg operator">
+                   X
+               </div></a>
+               
+                <a id="delete"><div class="btn btn-default btn-lg operator">
+                   DEL
+               </div></a>
+                
+            </div>
+            <div class="row btn-rows">
+                <div class="btn btn-default btn-lg numbtn" id="7">
+                 7
+               </div>
+               
+                <div class="btn btn-default btn-lg numbtn" id="8">
+                   8
+               </div>
+               
+                <div class="btn btn-default btn-lg numbtn" id="9">
+                   9
+               </div>
+               
+                 <div class="btn btn-default btn-lg numbtn" id="minus">
+                   -
+               </div>
+            </div>
+            <div class="row btn-rows">
+                <div class="btn btn-default btn-lg numbtn" id="4">
+                  4
+               </div>
+               
+               <div class="btn btn-default btn-lg numbtn" id="5">
+                   5
+               </div>
+               
+               <div class="btn btn-default btn-lg numbtn" id="6">
+                   6
+               </div>
+               
+                <div class="btn btn-default btn-lg numbtn" id="plus">
+                   +
+               </div>
+            </div>
+            <div class="row btn-rows">
+                <div class="btn btn-default btn-lg numbtn" id="1">
+                  1
+               </div>
+               
+               <div class="btn btn-default btn-lg numbtn" id="2">
+                   2
+               </div>
+               
+               <div class="btn btn-default btn-lg numbtn" id="3">
+                   3
+               </div>
+               
+                <div class="btn btn-default btn-lg numbtn" id="mod">
+                   MOD
+               </div>
+            </div>
+            <div class="row btn-rows">
+                <div class="btn btn-default btn-lg numbtn" id="zero">
+                  0
+               </div>
+               
+               <div class="btn btn-default btn-lg numbtn" id="dot">
+                   .
+               </div>
+               
+               <div class="btn btn-default btn-lg numbtn" id="sign">
+                   +/-
+               </div>
+               
+                <div class="btn btn-default btn-lg numbtn" id="equal">
+                   =
+               </div>
+            </div>
+        </div>
+    
+    <!-- JavaScript -->
+    <script src="js/jquery.js"></script>
+    <script src="js/calculate.js"></script>    
+    </body>
+</html>
