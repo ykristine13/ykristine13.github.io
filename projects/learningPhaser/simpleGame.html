@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="description" content="">
+    <meta name="author" content="Yvonne Kristine">
+    <title>"Get the Goal" | JavaScript Programming</title>
+    <link href="../../bootstrap-grayscale-theme/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../../bootstrap-grayscale-theme/vendor/jquery/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../bootstrap-grayscale-theme/vendor/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>    
+    <!-- Modal to show when game over -->
+    <div class="modal fade" id="notification" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Game Over</h5>
+                </div>
+                <div class="modal-body">
+                    You Lost... :(
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <canvas width="500" height="250" id="stage" style="border: 2px solid #000; width: 100%"></canvas>
+
+    <script type="text/javascript">
+        window.addEventListener("load", function() {
+
+            // constants
+            const GAME_WIDTH = 500;
+            const GAME_HEIGHT = 250;
+            const PLAYER_INITIAL_x = 10;
+            const PLAYER_INITIAL_y = 160;
+
+            // need to add this to access canvas html element
+            var canvas = document.getElementById("stage");
+            var ctx = canvas.getContext("2d");
+
+            // Level
+            var level = 1;
+
+            // handles all the images
+            var sprites = {};
+
+            // 4 enemy objects with varying locations and speed
+            var enemies = [{
+                    x: 75,
+                    y: 10,
+                    width: 35,
+                    height: 35,
+                    speedY: 2
+                },
+                {
+                    x: 150,
+                    y: 85,
+                    width: 35,
+                    height: 35,
+                    speedY: 2
+                },
+                {
+                    x: 280,
+                    y: 150,
+                    width: 35,
+                    height: 35,
+                    speedY: 2
+                },
+                {
+                    x: 370,
+                    y: 190,
+                    width: 35,
+                    height: 35,
+                    speedY: 2
+                }
+            ];
+
+            // player - bird
+            var player = {
+                x: PLAYER_INITIAL_x,
+                y: PLAYER_INITIAL_y,
+                width: 30,
+                height: 30,
+                speed: 3,
+                isMovingForward: false,
+                isMovingBack: false
+            };
+
+            // goal - treasure chest
+            var goal = {
+                x: 430,
+                y: 160,
+                width: 30,
+                height: 30
+            };
+
+            /* ---------------------- Movements  ---------------------- */
+            var movePlayerForward = function() {
+                player.isMovingForward = true;
+            };
+
+            var movePlayerBack = function() {
+                player.isMovingBack = true;
+            }
+
+            var stopPlayer = function() {
+                player.isMovingForward = false;
+                player.isMovingBack = false;
+            }
+
+
+            var gameOver = function() {
+                $('#notification').modal('show');
+                $('#closeModal').click(function(){
+                    console.log("game over");
+                    window.location = "";
+                });
+            }
+
+            var checkCollision = function(enemy, player) {
+                var closeOnWidth = Math.abs(enemy.x - player.x) <= Math.max(enemy.width, player.width);
+                var closeOnHeight = Math.abs(enemy.y - player.y) <= Math.max(enemy.height, player.height);
+
+                return closeOnWidth && closeOnHeight;
+            }
+
+            var levelUp = function() {
+                // increase enemy speed
+                enemies.forEach(function(enemy, index) {
+                    enemy.speedY = Math.abs(enemy.speedY) + 1;
+                });
+
+                // increment level count
+                level++;
+
+                // reset player position
+                player.x = PLAYER_INITIAL_x;
+                player.y = PLAYER_INITIAL_y;
+                player.isMovingForward = false;
+                player.isMovingBack = false;
+            };
+
+            var load = function() {
+                sprites.player = new Image();
+                sprites.player.src = "images/hero.png";
+
+                sprites.background = new Image();
+                sprites.background.src = "images/floor.png";
+
+                sprites.enemies = new Image();
+                sprites.enemies.src = "images/enemy.png";
+
+                sprites.gold = new Image();
+                sprites.gold.src = "images/chest.png";
+            };
+
+            /* ------------------------- CONTROLS ------------------------- */
+
+            //event listener to move player
+            canvas.addEventListener("touchstart", movePlayerForward);
+            canvas.addEventListener("touchend", stopPlayer);
+
+            // event listener move player using right arrow key
+            document.addEventListener('keydown', function() {
+                if (event.key === "ArrowRight") {
+                    movePlayerForward();
+                    document.addEventListener('keyup', stopPlayer);
+                };
+            });
+
+            // event listener to move player using left arrow key
+            document.addEventListener('keydown', function() {
+                if (event.key === "ArrowLeft") {
+                    movePlayerBack();
+                    document.addEventListener('keyup', stopPlayer);
+                };
+            });
+
+            var update = function() {
+                var enemyCount = enemies.length;
+
+                enemies.forEach(function(enemy, index) {
+                    enemy.y += enemy.speedY;
+                    if (enemy.y <= 10) {
+                        enemy.y = 10;
+                        enemy.speedY *= -1;
+                    } else if (enemy.y >= GAME_HEIGHT - 50) {
+                        enemy.y = GAME_HEIGHT - 50;
+                        enemy.speedY *= -1;
+                    }
+                    // check if player collided with enemy
+                    if (checkCollision(enemy, player)) {
+                        gameOver();
+                    }
+                });
+
+                // player movement
+                if (player.isMovingForward) {
+                    player.x += player.speed;
+                } else if (player.isMovingBack) {
+                    player.x -= player.speed;
+                }
+
+                // getting the gold
+                if (checkCollision(goal, player)) {
+                    levelUp();
+                    alert("Congratulations! You're now on level " + level + " :)");
+                }
+
+            };
+
+            var draw = function() {
+                var enemyCount = enemies.length;
+                // clears the canvas
+                ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+                // draw background
+                ctx.drawImage(sprites.background, 0, 0);
+
+                // draw player image
+                ctx.drawImage(sprites.player, player.x, player.y);
+
+                // draw enemy image;
+                enemies.forEach(function(enemy, index) {
+                    ctx.drawImage(sprites.enemies, enemy.x, enemy.y);
+                });
+
+
+                // draw gold chest
+                ctx.drawImage(sprites.gold, goal.x, goal.y);
+
+                // draw level text
+                ctx.font = '20px sans-serif'
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillText('Level ' + level, 250, 25);
+
+            };
+
+            var step = function() {
+                update();
+                draw();
+                window.requestAnimationFrame(step);
+            };
+
+            load();
+            step();
+
+        });
+    </script>
+</body>
+
+</html>
